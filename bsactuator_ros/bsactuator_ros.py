@@ -1,14 +1,13 @@
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Int16, String
-from action_msgs.msg import GoalStatus
 from bsactuator import bsactuator
 import time
 
 class BsActuatorNode(Node):
 
     def __init__(self):
-        super().__init__('bsactuator')
+        super().__init__('bsactuator_ros')
         self.model = "50mm02"
 
         # Initialize the bsactuator
@@ -25,7 +24,6 @@ class BsActuatorNode(Node):
         # Setting publishers
         self.get_logger().info("Setting publishers...")
         self.publisher_get_length = self.create_publisher(Int16, 'bsactuator/length', 10)
-        self.publisher_goal_status = self.create_publisher(GoalStatus, 'bsactuator/status', 10)
 
         self.moving = False
         self.current_length = 0
@@ -64,11 +62,7 @@ class BsActuatorNode(Node):
                 self.current_length = int(self.ba.get_length())
                 self.publisher_get_length.publish(Int16(data=self.current_length))
 
-                goal = GoalStatus()
-                goal.status = 3  # Goal reached
-                goal.text = "Goal reached."
-                self.publisher_goal_status.publish(goal)
-
+                self.get_logger().info("Goal reached.")
                 self.moving = False
 
     def hold_callback(self, msg):
@@ -92,10 +86,7 @@ class BsActuatorNode(Node):
         self.publisher_get_length.publish(Int16(data=self.current_length))
         if self.moving and abs(self.current_length - self.dist_length) < 10:
             self.moving = False
-            goal = GoalStatus()
-            goal.status = 3  # Goal reached
-            goal.text = "Goal reached."
-            self.publisher_goal_status.publish(goal)
+            self.get_logger().info("Goal reached.")
 
 
 def main(args=None):

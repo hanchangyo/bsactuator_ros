@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'bsactuator'
+package_name = 'bsactuator_ros'
 
 setup(
     name=package_name,
@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'bsactuator = bsactuator.bsactuator:main'
+            'bsactuator_ros = bsactuator_ros.bsactuator_ros:main'
         ],
     },
 )
