@@ -20,7 +20,7 @@ mv bambooshoot_actuator.rules /etc/udev/rules.d/
 ## Launch ファイルの実行
 
 ```
-ros2 launch bsactuator_ros bsactuator.launch
+ros2 launch bsactuator_ros bsactuator_launch.py
 ```
 
 ## Subscribers
