@@ -42,32 +42,12 @@ class BsActuatorNode(Node):
         self.get_logger().info("Bambooshoot actuator started.")
 
     def set_length_callback(self, msg):
-        if self.model != "50mm02":
-            if time.time() < self.timeout:
-                return
-            self.timeout = time.time() + self.waitsec
-
         self.get_logger().info(f"Dist length: {msg.data}mm")
         self.dist_length = msg.data
 
         if self.model == "50mm02":
             self.moving = True
             self.ba.set_length(msg.data)
-        else:
-            if not self.moving:
-                self.moving = True
-                self.get_logger().info(f"Moving to {msg.data}mm")
-
-                if msg.data == 0:
-                    self.ba.reset()
-                else:
-                    result = self.ba.set_length(msg.data, 7)
-
-                self.current_length = int(self.ba.get_length())
-                self.publisher_get_length.publish(Int16(data=self.current_length))
-
-                self.get_logger().info("Goal reached.")
-                self.moving = False
 
     def hold_callback(self, msg):
         if msg.data:
