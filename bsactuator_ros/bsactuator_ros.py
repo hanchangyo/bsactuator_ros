@@ -11,7 +11,7 @@ class BsActuatorNode(Node):
         self.model = "50mm02"
 
         # Initialize the bsactuator
-        self.ba = bsactuator.BsActuator("/dev/bambooshoot_actuator", 9600, self.model)
+        self.ba = bsactuator.BsActuator("/dev/bambooshoot_actuator", 115200, self.model)
 
         # Setting subscribers
         self.get_logger().info("Setting subscribers...")
