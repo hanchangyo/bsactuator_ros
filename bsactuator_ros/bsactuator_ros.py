@@ -15,11 +15,11 @@ class BsActuatorNode(Node):
 
         # Setting subscribers
         self.get_logger().info("Setting subscribers...")
-        self.create_subscription(Int16, 'set_length', self.set_length_callback, 10)
-        self.create_subscription(String, 'hold', self.hold_callback, 10)
-        self.create_subscription(String, 'release', self.release_callback, 10)
-        self.create_subscription(String, 'reset', self.reset_callback, 10)
-        self.create_subscription(String, 'stop', self.stop_callback, 10)
+        self.create_subscription(Int16, 'bsactuator/set_length', self.set_length_callback, 10)
+        self.create_subscription(String, 'bsactuator/hold', self.hold_callback, 10)
+        self.create_subscription(String, 'bsactuator/release', self.release_callback, 10)
+        self.create_subscription(String, 'bsactuator/reset', self.reset_callback, 10)
+        self.create_subscription(String, 'bsactuator/stop', self.stop_callback, 10)
 
         # Setting publishers
         self.get_logger().info("Setting publishers...")
