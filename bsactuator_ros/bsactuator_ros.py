@@ -3,12 +3,16 @@ from rclpy.node import Node
 from std_msgs.msg import Int16, String
 from bsactuator import bsactuator
 import time
+import logging
 
 class BsActuatorNode(Node):
 
     def __init__(self):
         super().__init__('bsactuator_ros')
         self.model = "50mm02"
+
+        # Set logging level
+        self.get_logger().set_level(logging.DEBUG)
 
         # Initialize the bsactuator
         self.ba = bsactuator.BsActuator("/dev/bambooshoot_actuator", 115200, self.model)
