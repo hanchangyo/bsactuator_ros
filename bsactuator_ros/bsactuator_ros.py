@@ -1,6 +1,6 @@
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import Int16, String
+from std_msgs.msg import Int16, Bool
 from bsactuator import bsactuator
 import time
 import logging
@@ -20,10 +20,10 @@ class BsActuatorNode(Node):
         # Setting subscribers
         self.get_logger().info("Setting subscribers...")
         self.create_subscription(Int16, 'bsactuator/set_length', self.set_length_callback, 10)
-        self.create_subscription(String, 'bsactuator/hold', self.hold_callback, 10)
-        self.create_subscription(String, 'bsactuator/release', self.release_callback, 10)
-        self.create_subscription(String, 'bsactuator/reset', self.reset_callback, 10)
-        self.create_subscription(String, 'bsactuator/stop', self.stop_callback, 10)
+        self.create_subscription(Bool, 'bsactuator/hold', self.hold_callback, 10)
+        self.create_subscription(Bool, 'bsactuator/release', self.release_callback, 10)
+        self.create_subscription(Bool, 'bsactuator/reset', self.reset_callback, 10)
+        self.create_subscription(Bool, 'bsactuator/stop', self.stop_callback, 10)
 
         # Setting publishers
         self.get_logger().info("Setting publishers...")
@@ -70,19 +70,19 @@ class BsActuatorNode(Node):
                 self.moving = False
 
     def hold_callback(self, msg):
-        if msg.data == "true":
+        if msg.data:
             self.ba.hold()
 
     def release_callback(self, msg):
-        if msg.data == "true":
+        if msg.data:
             self.ba.release()
 
     def reset_callback(self, msg):
-        if msg.data == "true":
+        if msg.data:
             self.ba.reset()
 
     def stop_callback(self, msg):
-        if msg.data == "true":
+        if msg.data:
             self.ba.stop()
 
     def publish_get_length(self):
