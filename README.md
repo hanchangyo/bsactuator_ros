@@ -1,6 +1,7 @@
 # bsactuator_ros
 
 This is a ROS2 package developed by RoboSapiens for interfacing with the Bambooshoot Actuator.
+The package is migrated from the ROS1 package (https://github.com/rb-sapiens/bsactuator_ros).
 
 ## Prerequisites
 
