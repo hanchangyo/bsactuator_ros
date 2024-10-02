@@ -1,6 +1,5 @@
 import rclpy
 from rclpy.node import Node
-from rclpy.qos import QoSProfile, ReliabilityPolicy
 from std_msgs.msg import Int16, Bool, String
 from bsactuator import bsactuator
 import time
@@ -10,14 +9,13 @@ class BsActuatorNode(Node):
     def __init__(self):
         super().__init__('bsactuator_ros')
         self.model = "50mm02"
-        self.qos_rel = QoSProfile(depth=100, reliability=ReliabilityPolicy.RELIABLE)
 
         # Initialize the bsactuator
         self.ba = bsactuator.BsActuator("/dev/bambooshoot_actuator", 115200, self.model)
 
         # Setting subscribers
         self.get_logger().info("Setting subscribers...")
-        self.create_subscription(Int16, 'bsactuator/set_length', self.set_length_callback, self.qos_rel)
+        self.create_subscription(Int16, 'bsactuator/set_length', self.set_length_callback, 10)
         self.create_subscription(Bool, 'bsactuator/hold', self.hold_callback, 10)
         self.create_subscription(Bool, 'bsactuator/release', self.release_callback, 10)
         self.create_subscription(Bool, 'bsactuator/reset', self.reset_callback, 10)
