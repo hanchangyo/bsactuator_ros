@@ -33,7 +33,7 @@ class BsActuatorNode(Node):
         self.waitsec = 0.5
 
         # Timer for periodic publish
-        self.timer = self.create_timer(0.1, self.publish_get_length)
+        self.timer = self.create_timer(1.0, self.publish_get_length)
         self.count = 0
 
         self.get_logger().info("Bambooshoot actuator started.")
@@ -73,7 +73,7 @@ class BsActuatorNode(Node):
 
             # Publish the status to indicate success
             status_msg = String()
-            status_msg.data = "Goal reached successfully."
+            status_msg.data = "success"
             self.publisher_goal_status.publish(status_msg)
 
         elif self.moving and abs(self.current_length - self.dist_length) >= 10:
@@ -84,12 +84,9 @@ def main(args=None):
     rclpy.init(args=args)
     node = BsActuatorNode()
 
-    try:
-        rclpy.spin(node)
-    except KeyboardInterrupt:
-        pass
-
+    rclpy.spin(node)
     node.destroy_node()
+
     rclpy.shutdown()
 
 
