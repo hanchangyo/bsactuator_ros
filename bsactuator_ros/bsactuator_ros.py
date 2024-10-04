@@ -49,18 +49,22 @@ class BsActuatorNode(Node):
 
     def hold_callback(self, msg):
         if msg.data:
+            self.get_logger().info("Received: hold")
             self.ba.hold()
 
     def release_callback(self, msg):
         if msg.data:
+            self.get_logger().info("Received: release")
             self.ba.release()
 
     def reset_callback(self, msg):
         if msg.data:
+            self.get_logger().info("Received: reset")
             self.ba.reset()
 
     def stop_callback(self, msg):
         if msg.data:
+            self.get_logger().info("Received: stop")
             self.ba.stop()
 
     def publish_get_length(self):
